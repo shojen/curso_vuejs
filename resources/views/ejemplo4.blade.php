@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Ejemplo 4 Vue.js - Mostrar y ocultar elementos v-if, v-else, v-show con vue.js 2</title>
+	<title>Ejemplo 4 Vue.js - Estilos y clases de CSS dinámicas con la directiva v-bind en Vue 2</title>
 	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>

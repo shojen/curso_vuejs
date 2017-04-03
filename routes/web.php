@@ -30,3 +30,7 @@ Route::get('ejemplo3',function(){
 Route::get('ejemplo4',function(){
 	return view('ejemplo4');
 });
+
+Route::get('ejemplo5',function(){
+	return view('ejemplo5');
+});
