@@ -15,7 +15,7 @@
 					<template v-else>@{{task.title}}</template>
 				</li>
 			</ul>
-			<template v-if="taskIsPending">
+			<template v-if="taskIsPending.length">
 				<h2>LISTADO DE TAREAS PENDIENTES</h2>
 				<ul>
 					<li v-for="task in taskIsPending">@{{task.title}}</li>

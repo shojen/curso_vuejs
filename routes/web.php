@@ -34,3 +34,7 @@ Route::get('ejemplo4',function(){
 Route::get('ejemplo5',function(){
 	return view('ejemplo5');
 });
+
+Route::get('ejemplo6',function(){
+	return view('ejemplo6');
+});
