@@ -42,3 +42,7 @@ Route::get('ejemplo6',function(){
 Route::get('ejemplo7',function(){
 	return view('ejemplo7');
 });
+
+Route::get('ejemplo8',function(){
+	return view('ejemplo8');
+});
