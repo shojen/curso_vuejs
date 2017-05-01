@@ -9,7 +9,7 @@
 	<div id="app">
 		<div class="container">
 			<div class="form-group">
-				<input type="text" v-model="name" class="form-control">
+				<input type="text" v-model="name" class="form-control" @change:editName(name)>
 			</div>
 			<div class="form-group">
 				<input type="text" v-model="email" class="form-control">
@@ -17,7 +17,7 @@
 			<p>Filter: @{{ name | reversed}}</p>
 			<p>Function: @{{ reverse(name) }}</p>
 			<p>Computed: @{{ reverseName }}</p>
-			{{-- <p>Editando en Function: @{{ editName(name) }} </p> --}}
+			<p>Editando en Function: @{{ showName(name) }} </p>
 			<p>Editando en Computed @{{ editNameComputed }}</p>
 		</div>
 	</div>
@@ -41,7 +41,10 @@
 				},
 				editName: function(value){
 			         this.name=value + 's';
-			         return value;
+			         
+		        },
+		        showName: function(value){
+		        	return value;
 		        }
 
 			},

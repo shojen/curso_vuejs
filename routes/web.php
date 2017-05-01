@@ -46,3 +46,10 @@ Route::get('ejemplo7',function(){
 Route::get('ejemplo8',function(){
 	return view('ejemplo8');
 });
+
+/**
+ * Ejercicio de Tareas
+ */
+Route::get('lesson12', function() {
+    return view('lesson12');
+});
