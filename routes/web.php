@@ -53,3 +53,15 @@ Route::get('ejemplo8',function(){
 Route::get('lesson12', function() {
     return view('lesson12');
 });
+Route::get('lesson18', function() {
+    return view('lesson18');
+});
+Route::get('lesson19', function() {
+    return view('lesson19');
+});
+Route::get('lesson20', function() {
+    return view('lesson20');
+});
+Route::get('lesson21', function() {
+    return view('lesson21');
+});

@@ -9,73 +9,81 @@ Vue.component('app-icon',{
 });
 
 Vue.component('app-task',{
+	data: function(){
+		return {
+			editing:false,
+			draft:''
+		}
+	},
 	template:'#task-template',
-	props:['tasks','task','index'],
+	props:['task','index'],
 	methods:{
-				createTask: function(){
-					tasks.push({
-						description:this.new_task,
-						pending:true,
-						editing:false
-					});
-					new_task='';
-				},
+				
 				toggleStatus: function(){
 					this.task.pending=(this.task.pending)?false:true;
 				},
 				edit: function(){
 					
-					this.tasks.forEach(function(task){
-						task.editing=false;
-					});
 					if(this.task.pending)
 					{
-						this.task.editing=true;	
+						this.$set(this.task,'editing',true);	
 						this.draft=this.task.description;					
 					}
 					
 				},
 				confirmChange:function(){
 					this.task.description=this.draft;
-					this.task.editing=false;
+					this.$set(this.task,'editing',false);
 				},
 				cancelChange:function(){
-					this.task.editing=false;
+					this.$set(this.task,'editing',false);
 				},
-				remove: function(){
-					this.tasks.splice(this.index,1);
-				},
-				deleteCompleted: function(){
-					this.tasks=this.tasks.filter(function(task){
-						return task.pending;
-					});
+				remove: function(){					
+					this.$emit('remove',this.index);
 				}
+				
 			}
 })
 
 var vm = new Vue({
 			el: '#app',
-			data:{
-				draft:'',
+			data:{				
 				tasks: [
 					{
 						description: 'Aprender Vue.js',
-						pending: true,
-						editing: false
+						pending: true
+						
 					},
 					{
 						description: 'Crear aplicaciones con Vue.js',
-						pending: true,
-						editing: false
+						pending: true
+						
 					},
 					{
 						description: 'Seguir el curso de vue.js',
-						pending: false,
-						editing: false
+						pending: false
+						
 					}
 				],
 				new_task:''
 			},
+			methods: {
+				create: function(){
+					this.tasks.push({
+						description:this.new_task,
+						pending:true,						
+					});
+					this.new_task='';
+				},
+				deleteCompleted: function(){
+					this.tasks=this.tasks.filter(function(task){
+						return task.pending;
+					});
+				},
+				deleteTask: function(index){					
+					this.tasks.splice(index,1);					
+				}
+			}
 			
 
 			

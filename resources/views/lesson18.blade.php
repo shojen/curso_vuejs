@@ -11,25 +11,7 @@
 	<div id="app" class="container">		
 		<h1>Tareas</h1>			
 		<ul class="list-group tasks">
-			<li v-for="(task,index) in tasks" class="list-group-item" :class="{editing:task.editing, completed:!task.pending}">
-				<a href="#" @click="toggleStatus(task)"><app-icon :img="task.pending?  'unchecked': 'check'" aria-hidden="true"></app-icon></a>
-				
-				<template v-if="task.editing">
-					<input type="text" v-model="draft">
-					<div class="pull-right" >
-						<a href="#" @click="confirmChangeTask(task)"><app-icon img="ok"></app-icon></a>
-						<a href="#" @click="cancelChangeTask(task)"><app-icon img="remove"></app-icon></a>						
-					</div>
-				</template>
-				<template v-else>
-					<span class="description">@{{ task.description }}</span>
-					<div class="pull-right">
-						<a href="#" @click="editTask(task)"><app-icon img='edit'></app-icon></span></a>
-						
-						<a href="#" @click="removeTask(index)"><app-icon img="trash"></app-icon></a>											
-					</div>
-				</template>
-			</li>
+			<li is="app-task" v-for="(task,index) in tasks" :task="task" :index="index" :tasks="tasks" ></li>
 		</ul>
 		<a href="#" @click="deleteCompleted()">Eliminar tareas completadas</a>
 		<form @submit.prevent="createTask" class="new-task-form">
@@ -39,6 +21,27 @@
 	</div>
 
 	<script type="text/javascript" src="https://unpkg.com/vue@2.2.6"></script>
+	<script type="text/x-template" id="task-template">
+		<li  class="list-group-item" :class="{editing:task.editing, completed:!task.pending}">
+				<a href="#" @click="toggleStatus(task)"><app-icon :img="task.pending?  'unchecked': 'check'" aria-hidden="true"></app-icon></a>
+				
+				<template v-if="task.editing">
+					<input type="text" v-model="draft">
+					<div class="pull-right" >
+						<a href="#" @click="confirmChange"><app-icon img="ok"></app-icon></a>
+						<a href="#" @click="cancelChange"><app-icon img="remove"></app-icon></a>						
+					</div>
+				</template>
+				<template v-else>
+					<span class="description">@{{ task.description }}</span>
+					<div class="pull-right">
+						<a href="#" @click="edit"><app-icon img='edit'></app-icon></span></a>
+						
+						<a href="#" @click="remove"><app-icon img="trash"></app-icon></a>											
+					</div>
+				</template>
+			</li>
+	</script>
 	<script type="text/javascript" src="{{ asset('js/vm.js') }}"></script>
 </body>
 </html>

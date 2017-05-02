@@ -1,3 +1,5 @@
+var EventBus = new Vue;
+
 Vue.component('app-icon',{
 	template: '<span :class="cssClasses" aria-hidden="true"></span>',
 	props:['img'],
@@ -9,73 +11,93 @@ Vue.component('app-icon',{
 });
 
 Vue.component('app-task',{
+	data: function(){
+		return {
+			editing:false,
+			draft:''
+		}
+	},
 	template:'#task-template',
-	props:['tasks','task','index'],
+	props:['task','index'],
+	created: function(){
+					
+					EventBus.$on('editing',function(index){
+						if(index!=this.index)
+						{
+							this.cancelChange();
+						}
+					}.bind(this));
+				},
 	methods:{
 				createTask: function(){
 					tasks.push({
 						description:this.new_task,
-						pending:true,
-						editing:false
+						pending:true,						
 					});
 					new_task='';
 				},
 				toggleStatus: function(){
 					this.task.pending=(this.task.pending)?false:true;
 				},
-				edit: function(){
+				edit: function(){					
 					
-					this.tasks.forEach(function(task){
-						task.editing=false;
-					});
 					if(this.task.pending)
 					{
-						this.task.editing=true;	
+						
+						EventBus.$emit('editing',this.index);
+
+						this.$set(this.task,'editing',true);
 						this.draft=this.task.description;					
 					}
 					
 				},
 				confirmChange:function(){
 					this.task.description=this.draft;
-					this.task.editing=false;
+					this.$set(this.task,'editing',false);
 				},
 				cancelChange:function(){
-					this.task.editing=false;
+					this.$set(this.task,'editing',false);
 				},
-				remove: function(){
-					this.tasks.splice(this.index,1);
-				},
-				deleteCompleted: function(){
-					this.tasks=this.tasks.filter(function(task){
-						return task.pending;
-					});
+				remove: function(){					
+					this.$emit('remove',this.index);
 				}
+				
+				
 			}
-})
+});
 
 var vm = new Vue({
 			el: '#app',
-			data:{
-				draft:'',
+			data:{				
 				tasks: [
 					{
 						description: 'Aprender Vue.js',
-						pending: true,
-						editing: false
+						pending: true
+						
 					},
 					{
 						description: 'Crear aplicaciones con Vue.js',
-						pending: true,
-						editing: false
+						pending: true
+						
 					},
 					{
 						description: 'Seguir el curso de vue.js',
-						pending: false,
-						editing: false
+						pending: false
+						
 					}
 				],
 				new_task:''
 			},
+			methods: {
+				deleteCompleted: function(){
+					this.tasks=this.tasks.filter(function(task){
+						return task.pending;
+					});
+				},
+				deleteTask: function(index){					
+					this.tasks.splice(index,1);					
+				}
+			}
 			
 
 			
